@@ -1,13 +1,10 @@
 # SNS Message Validator
 
-Implementing an HTTP endpoint for AWS SNS involves some non-trivial logic, especially [signature verification](https://docs.aws.amazon.com/sns/latest/dg/SendMessageToHttp.verify.signature.html). AWS documentation only provides [example code in Java](https://docs.aws.amazon.com/sns/latest/dg/SendMessageToHttp.example.java.html). AWS SDK for Python does not include any helper for SNS message validation ([issue](https://github.com/boto/boto3/issues/1469)) so Python developers would need to invent their own wheels to do that. This repository inplements an SNS message validator based on [the official AWS documentation](https://docs.aws.amazon.com/sns/latest/dg/sns-http-https-endpoint-as-subscriber.html), and offers example code of how to use it to implement an HTTP endpoint for SNS in Python. 
+Implementing an HTTP endpoint for AWS SNS involves some non-trivial logic, especially [signature verification](https://docs.aws.amazon.com/sns/latest/dg/SendMessageToHttp.verify.signature.html). AWS documentation only provides [example code in Java](https://docs.aws.amazon.com/sns/latest/dg/SendMessageToHttp.example.java.html). AWS SDK for Python does not include any helper for SNS message validation ([issue](https://github.com/boto/boto3/issues/1469)) so Python developers would need to invent their own wheels to do that. This repository inplements an SNS message validator based on [the official AWS documentation](https://docs.aws.amazon.com/sns/latest/dg/sns-http-https-endpoint-as-subscriber.html), and offers [example code](flask_example.py) of how to use it to implement an HTTP endpoint for SNS in Python. 
 
 
 ## Prerequisite
 - Python >= 3.7
-
-## Development Setup
-Download this repo and run `pip install -r requirements.txt`.
 
 ## Install
 `pip install git+https://github.com/wlwg/sns-message-validator.git`
