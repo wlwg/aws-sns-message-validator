@@ -1,0 +1,6 @@
+# prd
+-e .
+
+# dev
+flask==1.0.2
+wheel==0.33.1
