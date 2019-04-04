@@ -3,13 +3,13 @@ import logging
 import json
 import requests
 from flask import Flask, request, Response
-from sns_message_verification import (
+from sns_message_validator import (
     InvalidMessageTypeException,
     InvalidCertURLException,
     InvalidSignatureVersionException,
     SignatureVerificationFailureException,
     SNSMessageType,
-    SNSMessageVerification,
+    SNSMessageValidator,
 )
 
 
@@ -18,11 +18,12 @@ APP = Flask(__name__)
 @APP.route('/', methods=['POST'])
 def main():
     logger = logging.getLogger('view.main')
-    sns_message_verifier = SNSMessageVerification()
+    sns_message_validator = SNSMessageValidator()
 
+    # Validate message type from header without having to parse the request body.
     message_type = request.headers.get('x-amz-sns-message-type')
     try:
-        sns_message_verifier.verify_message_type(message_type)
+        sns_message_validator.validate_message_type(message_type)
     except InvalidMessageTypeException as ex:
         logger.error(ex)
         return Response('Invalid message type.', status=500)
@@ -35,10 +36,10 @@ def main():
         return Response(error_msg, status=500)
 
     try:
-        sns_message_verifier.verify_message(message=message)
+        sns_message_validator.validate_message(message=message)
     except (InvalidCertURLException, InvalidSignatureVersionException, SignatureVerificationFailureException) as ex:
         logger.error(ex)
-        return Response('Failed to verify the message.', status=500)
+        return Response('Invalid message.', status=500)
 
     if message_type == SNSMessageType.SubscriptionConfirmation.value:
         resp = requests.get(message.get('SubscribeURL'))

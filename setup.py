@@ -11,11 +11,11 @@ EXCLUDED_PACKAGES = [
 ]
 
 setup(
-    name='sns-message-verification',
+    name='sns-message-validator',
     version='0.0.1',
-    description='Verification for SNS messages.',
+    description='Validator for SNS messages.',
     author='https://github.com/wlwg',
-    url='https://github.com/wlwg/sns-message-verification',
+    url='https://github.com/wlwg/sns-message-validator',
     python_requires='>=3.7',
     install_requires=DEPENDENCIES,
     packages=find_packages(exclude=EXCLUDED_PACKAGES),

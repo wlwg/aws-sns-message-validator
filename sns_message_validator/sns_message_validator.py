@@ -22,15 +22,15 @@ from .exceptions import (
 DEFAULT_CERTIFICATE_URL_REGEX = r'^https://sns\.[-a-z0-9]+\.amazonaws\.com/'
 
 
-class SNSMessageVerification:
+class SNSMessageValidator:
     def __init__(self, cert_url_regex=DEFAULT_CERTIFICATE_URL_REGEX):
         self._cert_url_regex = cert_url_regex
 
-    def _verify_signature_version(self, message):
+    def _validate_signature_version(self, message):
         if message.get('SignatureVersion') != '1':
             raise InvalidSignatureVersionException('Invalid signature version. Unable to verify signature.')
     
-    def _verify_cert_url(self, message):
+    def _validate_cert_url(self, message):
         cert_url = message.get('SigningCertURL')
         if not cert_url:
             raise InvalidCertURLException('Could not find SigningCertURL field in message.')
@@ -70,14 +70,14 @@ class SNSMessageVerification:
         except InvalidSignature:
             raise SignatureVerificationFailureException('Invalid signature.')
 
-    def verify_message(self, message):
-        self.verify_message_type(message.get('Type'))
+    def validate_message(self, message):
+        self.validate_message_type(message.get('Type'))
 
-        self._verify_signature_version(message)
-        self._verify_cert_url(message)
+        self._validate_signature_version(message)
+        self._validate_cert_url(message)
         self._verify_signature(message)
 
-    def verify_message_type(self, message_type: str):
+    def validate_message_type(self, message_type: str):
         try:
             sns_message_type: SNSMessageType = SNSMessageType(message_type)
         except ValueError:
