@@ -43,7 +43,6 @@ def main():
 
     if message_type == SNSMessageType.SubscriptionConfirmation.value:
         resp = requests.get(message.get('SubscribeURL'))
-        logger.debug(resp)
         if resp.status_code != 200:
             return Response('Subscription confirmation failed.', status=500)
         return Response('Subscription is successfully confirmed.', status=200)
