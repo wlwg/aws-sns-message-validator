@@ -19,15 +19,18 @@ from .exceptions import (
 )
 
 
-DEFAULT_CERTIFICATE_URL_REGEX = r'^https://sns\.[-a-z0-9]+\.amazonaws\.com/'
+_DEFAULT_CERTIFICATE_URL_REGEX = r'^https://sns\.[-a-z0-9]+\.amazonaws\.com/'
 
 
 class SNSMessageValidator:
-    def __init__(self, cert_url_regex=DEFAULT_CERTIFICATE_URL_REGEX):
+    def __init__(self, 
+                 cert_url_regex=_DEFAULT_CERTIFICATE_URL_REGEX,
+                 signature_version='1'):
         self._cert_url_regex = cert_url_regex
+        self._signature_version = signature_version
 
     def _validate_signature_version(self, message):
-        if message.get('SignatureVersion') != '1':
+        if message.get('SignatureVersion') != self._signature_version:
             raise InvalidSignatureVersionException('Invalid signature version. Unable to verify signature.')
     
     def _validate_cert_url(self, message):
