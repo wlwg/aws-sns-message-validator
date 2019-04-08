@@ -20,4 +20,4 @@ Refer to the example code [`flask_example.py`](flask_example.py) to see how to u
 - Use `ngrok` to expose the local server to the public internet (`./ngrok http -bind-tls=true localhost:5000`). Now you should get a public endpoint (`https://xxxxxxxx.ngrok.io`) that can be set as a subscriber of an SNS topic.
 
 ## Issues
-Feel free to create an issue if you found a bug or have a feature requests.
+Feel free to create an issue if you found a bug or have a feature request.
