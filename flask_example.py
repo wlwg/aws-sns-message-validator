@@ -26,31 +26,39 @@ def main():
         sns_message_validator.validate_message_type(message_type)
     except InvalidMessageTypeException as ex:
         logger.error(ex)
-        return Response('Invalid message type.', status=500)
+        return Response('Invalid message type.', status=400)
 
     try:
         message = json.loads(request.data)
     except json.decoder.JSONDecodeError as ex:
         error_msg = 'Request body is not in json format.'
         logger.error(f'{error_msg} {ex}')
-        return Response(error_msg, status=500)
+        return Response(error_msg, status=400)
 
     try:
         sns_message_validator.validate_message(message=message)
-    except (InvalidCertURLException, InvalidSignatureVersionException, SignatureVerificationFailureException) as ex:
+    except InvalidCertURLException as ex:
         logger.error(ex)
-        return Response('Invalid message.', status=500)
+        return Response('Invalid certificate URL.', status=400)
+    except InvalidSignatureVersionException as ex:
+        logger.error(ex)
+        return Response('Unexpected signature version.', status=400)
+    except SignatureVerificationFailureException as ex:
+        logger.error(ex)
+        return Response('Failed to verify signature.', status=400)
 
     if message_type == SNSMessageType.SubscriptionConfirmation.value:
         resp = requests.get(message.get('SubscribeURL'))
         if resp.status_code != 200:
-            return Response('Subscription confirmation failed.', status=500)
+            logger.error(resp)
+            return Response('Request to SubscribeURL failed. Unable to confirm subscription.', status=500)
         return Response('Subscription is successfully confirmed.', status=200)
 
     if message_type == SNSMessageType.UnsubscribeConfirmation.value:
         resp = requests.get(message.get('UnsubscribeURL'))
         if resp.status_code != 200:
-            return Response('Subscription confirmation failed.', status=500)
+            logger.error(resp)
+            return Response('Request to UnsubscribeURL failed. Unable to unsubscribe.', status=500)
         return Response('Successfully unsubscribed.', status=200)
 
     logger.debug(message.get('Message')) # replace this with your own business logic of processing the message
