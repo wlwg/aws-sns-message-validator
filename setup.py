@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 DEPENDENCIES = [
     'requests==2.21.0',
-    'cryptography==2.6.1',
+    'cryptography==3.2',
 ]
 
 EXCLUDED_PACKAGES = [
