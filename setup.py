@@ -2,7 +2,7 @@ from datetime import datetime
 from setuptools import setup, find_packages
 
 DEPENDENCIES = [
-    'requests==2.21.0',
+    'requests==2.24.0',
     'cryptography==3.2',
 ]
 
