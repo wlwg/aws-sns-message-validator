@@ -7,7 +7,7 @@ To solve this problem, this repository offers an SNS message validator which is 
 
 
 ## Prerequisite
-- Python >= 3.7
+- Python >= 3.6 
 
 ## Install
 `pip install sns-message-validator`
