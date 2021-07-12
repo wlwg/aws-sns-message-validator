@@ -2,8 +2,8 @@ from datetime import datetime
 from setuptools import setup, find_packages
 
 DEPENDENCIES = [
-    'requests==2.24.0',
-    'cryptography==3.3.2',
+    'requests>=2.24.0',
+    'cryptography>=3.3.2',
 ]
 
 EXCLUDED_PACKAGES = [
@@ -12,7 +12,7 @@ EXCLUDED_PACKAGES = [
 
 setup(
     name='sns-message-validator',
-    version='0.0.1',
+    version='0.0.2',
     description='Validator for SNS messages.',
     author='https://github.com/wlwg',
     url='https://github.com/wlwg/sns-message-validator',
