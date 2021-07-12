@@ -16,7 +16,7 @@ setup(
     description='Validator for SNS messages.',
     author='https://github.com/wlwg',
     url='https://github.com/wlwg/sns-message-validator',
-    python_requires='>=3.7',
+    python_requires='>=3.6',
     install_requires=DEPENDENCIES,
     packages=find_packages(exclude=EXCLUDED_PACKAGES),
 )
