@@ -14,7 +14,7 @@ To solve this problem, this repository offers an SNS message validator which is 
 
 ## Usage
 Refer to the example code [`flask_example.py`](flask_example.py) to see how to use this package in your SNS http endpoint. In order to quickly try out the example code, follow the steps below:
-- Make sure you have Python>=3.7 installed. (Create a virtual environment if you want to.)
+- Make sure you have Python>=3.6 installed. (Create a virtual environment if you want to.)
 - Checkout this repo and install dev dependencies by `python3 -m pip install -r requirements.txt`
 - Run `FLASK_APP=flask_example.py flask run --port=5000` to start an http server.
 - Use `ngrok` to expose the local server to the public internet (`./ngrok http -bind-tls=true localhost:5000`). Now you should get a public endpoint (`https://xxxxxxxx.ngrok.io`) that can be set as a subscriber of an SNS topic.
