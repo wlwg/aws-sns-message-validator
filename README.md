@@ -10,7 +10,7 @@ To solve this problem, this repository offers an SNS message validator which is 
 - Python >= 3.6 
 
 ## Install
-`pip install sns-message-validator`
+`pip install aws-sns-message-validator`
 
 ## Usage
 Refer to the example code [`flask_example.py`](flask_example.py) to see how to use this package in your SNS http endpoint. In order to quickly try out the example code, follow the steps below:

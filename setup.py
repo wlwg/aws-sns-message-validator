@@ -11,8 +11,8 @@ EXCLUDED_PACKAGES = [
 ]
 
 setup(
-    name='sns-message-validator',
-    version='0.0.2',
+    name='aws-sns-message-validator',
+    version='0.0.3',
     description='Validator for SNS messages.',
     author='https://github.com/wlwg',
     url='https://github.com/wlwg/sns-message-validator',
