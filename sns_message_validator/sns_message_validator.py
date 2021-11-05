@@ -24,7 +24,7 @@ class SNSMessageValidator:
                  signature_version='1'):
         self._cert_url_regex = cert_url_regex
         self._signature_version = signature_version
-        self.certSession = CachedSession('cert_cache', backend='memory')
+        self._cert_session = CachedSession('cert_cache', backend='memory')
 
     def _validate_signature_version(self, message):
         if message.get('SignatureVersion') != self._signature_version:
@@ -52,7 +52,7 @@ class SNSMessageValidator:
 
     def _verify_signature(self, message):
         try:
-            pem = self.certSession.get(message.get('SigningCertURL')).content
+            pem = self._cert_session.get(message.get('SigningCertURL')).content
         except Exception:
             raise SignatureVerificationFailureException('Failed to fetch cert file.')
 
