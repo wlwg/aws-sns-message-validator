@@ -3,6 +3,7 @@ from setuptools import setup, find_packages
 
 DEPENDENCIES = [
     'requests>=2.24.0',
+    'requests-cache>=0.8.0'
     'cryptography>=3.3.2',
 ]
 

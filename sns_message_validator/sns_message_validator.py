@@ -1,6 +1,6 @@
 import re
 import base64
-import requests
+from requests_cache import CachedSession
 from cryptography import x509
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives.asymmetric.padding import PKCS1v15
@@ -24,6 +24,7 @@ class SNSMessageValidator:
                  signature_version='1'):
         self._cert_url_regex = cert_url_regex
         self._signature_version = signature_version
+        self._cert_session = CachedSession('cert_cache', backend='memory')
 
     def _validate_signature_version(self, message):
         if message.get('SignatureVersion') != self._signature_version:
@@ -51,7 +52,7 @@ class SNSMessageValidator:
 
     def _verify_signature(self, message):
         try:
-            pem = requests.get(message.get('SigningCertURL')).content
+            pem = self._cert_session.get(message.get('SigningCertURL')).content
         except Exception:
             raise SignatureVerificationFailureException('Failed to fetch cert file.')
 

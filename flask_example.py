@@ -14,11 +14,11 @@ from sns_message_validator import (
 
 
 APP = Flask(__name__)
+sns_message_validator = SNSMessageValidator()
 
 @APP.route('/', methods=['POST'])
 def main():
     logger = logging.getLogger('view.main')
-    sns_message_validator = SNSMessageValidator()
 
     # Validate message type from header without having to parse the request body.
     message_type = request.headers.get('x-amz-sns-message-type')
