@@ -16,7 +16,7 @@ EXCLUDED_PACKAGES = [
 
 setup(
     name='aws-sns-message-validator',
-    version='0.0.4',
+    version='0.0.5',
     description='Validator for AWS SNS messages.',
     long_description=LONG_DESCRIPTION,
     long_description_content_type='text/markdown',
