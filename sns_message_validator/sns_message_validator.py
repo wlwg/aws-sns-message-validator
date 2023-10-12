@@ -1,6 +1,7 @@
 import re
 import base64
-from requests_cache import CachedSession
+import requests
+from functools import lru_cache
 from cryptography import x509
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives.asymmetric.padding import PKCS1v15
@@ -18,13 +19,19 @@ from .exceptions import (
 _DEFAULT_CERTIFICATE_URL_REGEX = r'^https://sns\.[-a-z0-9]+\.amazonaws\.com/'
 
 
+@lru_cache(maxsize=None)
+def fetch_certificate(url):
+    return requests.get(url).content
+
+
 class SNSMessageValidator:
     def __init__(self, 
                  cert_url_regex=_DEFAULT_CERTIFICATE_URL_REGEX,
-                 signature_version='1'):
+                 signature_version='1',
+                 fetch_certificate=fetch_certificate):
         self._cert_url_regex = cert_url_regex
         self._signature_version = signature_version
-        self._cert_session = CachedSession('cert_cache', backend='memory')
+        self._fetch_certificate = fetch_certificate
 
     def _validate_signature_version(self, message):
         if message.get('SignatureVersion') != self._signature_version:
@@ -52,7 +59,7 @@ class SNSMessageValidator:
 
     def _verify_signature(self, message):
         try:
-            pem = self._cert_session.get(message.get('SigningCertURL')).content
+            pem = self._fetch_certificate(message.get('SigningCertURL'))
         except Exception:
             raise SignatureVerificationFailureException('Failed to fetch cert file.')
 
