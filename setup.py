@@ -6,7 +6,6 @@ LONG_DESCRIPTION = (Path(__file__).parent/'README.md').read_text()
 
 DEPENDENCIES = [
     'requests>=2.24.0',
-    'requests-cache>=0.8.0',
     'cryptography>=3.3.2',
 ]
 
